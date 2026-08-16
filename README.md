@@ -1,4 +1,4 @@
-
+<div align="center">
 
 # ⚡ RepoMind
 
@@ -8,22 +8,21 @@ An **AI-powered platform for understanding GitHub repositories and developer pro
 
 Chat with any repository, generate architecture insights, and run security scans — **without cloning the repo**.
 
-  
+<br>
 
+<img src="https://img.shields.io/badge/Framework-Next.js-black?style=for-the-badge&logo=next.js"/>
+<img src="https://img.shields.io/badge/Language-TypeScript-blue?style=for-the-badge&logo=typescript"/>
+<img src="https://img.shields.io/badge/AI-Gemini-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Database-Prisma-green?style=for-the-badge&logo=prisma"/>
+<img src="https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel"/>
 
-
-
-  
-  
-
+<br><br>
 
 **Understand any GitHub repository in seconds.**
 
-
+</div>
 
 ---
-
-
 
 # 🚀 What is RepoMind?
 
@@ -31,10 +30,10 @@ RepoMind transforms any GitHub repository into an **interactive AI-powered knowl
 
 Instead of manually reading hundreds of files, developers can:
 
-- Ask questions about the codebase
-- Generate architecture diagrams
-- Identify security vulnerabilities
-- Understand dependencies and project structure
+* Ask questions about the codebase
+* Generate architecture diagrams
+* Identify security vulnerabilities
+* Understand dependencies and project structure
 
 All directly **inside the browser**.
 
@@ -42,12 +41,9 @@ RepoMind works without cloning repositories locally — it analyzes code using *
 
 ---
 
-
-
 # ✨ Core Features
 
-
-
+<div align="center">
 
 | 🔍 Repo Intelligence             | 💬 Chat With Code         | 📊 Architecture Insights       |
 | -------------------------------- | ------------------------- | ------------------------------ |
@@ -55,14 +51,11 @@ RepoMind works without cloning repositories locally — it analyzes code using *
 | Full-file context analysis       | Locate logic across files | Visualize dependencies         |
 | Detect patterns & structure      | Explain complex systems   | Flowcharts from real code      |
 
+</div>
 
+<br>
 
-
-  
-
-
-
-
+<div align="center">
 
 | 🛡 Security Scanning      | 👨‍💻 Developer Insights   | ⚡ Instant Repo Analysis |
 | ------------------------- | -------------------------- | ----------------------- |
@@ -70,66 +63,41 @@ RepoMind works without cloning repositories locally — it analyzes code using *
 | Find hardcoded secrets    | View contribution patterns | Works via GitHub APIs   |
 | Dependency risk detection | Explore top repositories   | Instant analysis        |
 
-
-
+</div>
 
 ---
 
-
-
 # 📸 Application Gallery
-
-Screenshots captured from the live app.
 
 <div align="center">
 
 <table>
+
 <tr>
-<td align="center" width="50%">
-<img src="public/gallery/home.png" width="400" alt="RepoMind home page"/><br/>
-<sub><b>Home</b> — paste a GitHub URL and open the repo</sub>
-</td>
-<td align="center" width="50%">
-<img src="public/gallery/demo.png" width="400" alt="Interactive demo"/><br/>
-<sub><b>Demo</b> — chat, architecture, and security walkthrough</sub>
-</td>
+<td><img src="public/gallery/home.png" width="400" alt="RepoMind home page"/></td>
+<td><img src="public/gallery/demo.png" width="400" alt="Interactive demo"/></td>
 </tr>
+
 <tr>
-<td align="center">
-<img src="public/gallery/repo.png" width="400" alt="Repository profile"/><br/>
-<sub><b>Repo profile</b> — stats, README, and analysis actions</sub>
-</td>
-<td align="center">
-<img src="public/gallery/chat.png" width="400" alt="Chat with codebase"/><br/>
-<sub><b>Chat</b> — ask questions against the full codebase</sub>
-</td>
+<td><img src="public/gallery/repo.png" width="400" alt="Repository profile"/></td>
+<td><img src="public/gallery/chat.png" width="400" alt="Chat with codebase"/></td>
 </tr>
+
 <tr>
-<td align="center">
-<img src="public/gallery/features.png" width="400" alt="Feature grid"/><br/>
-<sub><b>Features</b> — intelligence, diagrams, scans, and profiles</sub>
-</td>
-<td align="center">
-<img src="public/gallery/cag.png" width="400" alt="Agentic CAG comparison"/><br/>
-<sub><b>Agentic CAG</b> — full-file context vs traditional RAG</sub>
-</td>
+<td><img src="public/gallery/features.png" width="400" alt="Feature grid"/></td>
+<td><img src="public/gallery/cag.png" width="400" alt="Agentic CAG comparison"/></td>
 </tr>
+
 <tr>
-<td align="center" colspan="2">
-<img src="public/gallery/login.png" width="400" alt="Sign in page"/><br/>
-<sub><b>Sign in</b> — GitHub login for dashboards and saved scans</sub>
-</td>
+<td><img src="public/gallery/login.png" width="400" alt="Sign in page"/></td>
+<td></td>
 </tr>
+
 </table>
 
 </div>
 
-
-
-
 ---
-
-
 
 # 🧠 Repository Intelligence Pipeline
 
@@ -157,10 +125,6 @@ G3 --> H
 G4 --> H
 ```
 
-
-
-
-
 ### Explanation
 
 The analysis pipeline works in multiple stages:
@@ -185,23 +149,21 @@ Imports and module relationships are analyzed to understand system architecture.
 
 Gemini models reason about:
 
-- repository architecture
-- code patterns
-- security vulnerabilities
-- dependency flows
+* repository architecture
+* code patterns
+* security vulnerabilities
+* dependency flows
 
 **6. Insight Generation**
 
 Results are converted into:
 
-- chat answers
-- diagrams
-- vulnerability reports
-- repo summaries
+* chat answers
+* diagrams
+* vulnerability reports
+* repo summaries
 
 ---
-
-
 
 # 🏗 System Architecture
 
@@ -228,20 +190,16 @@ API --> Database
 Database --> Cache
 ```
 
-
-
-
-
 ### Explanation
 
 **Frontend (Next.js)**
 
 Handles:
 
-- UI interactions
-- repo chat interface
-- architecture visualization
-- security reports
+* UI interactions
+* repo chat interface
+* architecture visualization
+* security reports
 
 ---
 
@@ -249,10 +207,10 @@ Handles:
 
 Acts as the orchestration layer responsible for:
 
-- repo fetching
-- triggering AI analysis
-- security scanning
-- caching results
+* repo fetching
+* triggering AI analysis
+* security scanning
+* caching results
 
 ---
 
@@ -274,21 +232,15 @@ Prisma stores structured data while caching layers reduce repeated analysis time
 
 ---
 
-
-
 # ⚙️ Getting Started
-
-
 
 ### Prerequisites
 
-- Node.js **18+**
-- GitHub Token
-- Gemini API Key
+* Node.js **18+**
+* GitHub Token
+* Gemini API Key
 
 ---
-
-
 
 ### Installation
 
@@ -302,8 +254,6 @@ npm install
 
 ---
 
-
-
 ### Environment Setup
 
 Create `.env.local`
@@ -315,8 +265,6 @@ DATABASE_URL=
 ```
 
 ---
-
-
 
 ### Start Development Server
 
@@ -331,8 +279,6 @@ http://localhost:3000
 ```
 
 ---
-
-
 
 ### Docker
 
@@ -360,36 +306,37 @@ The Compose stack includes:
 If you want a standalone image instead of Compose:
 
 ```bash
-docker build -t gitpulse .
+docker build -t repomind .
 
 docker run -p 3000:3000 \
   --env-file .env.local \
-  --env DATABASE_URL=postgres://gitpulse:gitpulse@db:5432/gitpulse \
-  --env DIRECT_URL=postgres://gitpulse:gitpulse@db:5432/gitpulse \
-  gitpulse
+  --env DATABASE_URL=postgres://repomind:repomind@db:5432/repomind \
+  --env DIRECT_URL=postgres://repomind:repomind@db:5432/repomind \
+  repomind
 ```
 
 ---
-
-
 
 # 🔮 Roadmap
 
 Future improvements planned for RepoMind:
 
-- repository dependency graphs
-- pull request intelligence
-- multi-repo analysis
-- deeper vulnerability scanning
-- contributor insights
+* repository dependency graphs
+* pull request intelligence
+* multi-repo analysis
+* deeper vulnerability scanning
+* contributor insights
 
 ---
 
-
+<div align="center">
 
 # 👨‍💻 Author
 
 **[Ajyendu Chaudhary](https://github.com/Ajyendu)**
 
+[ajyenduc@gmail.com](mailto:ajyenduc@gmail.com)
+
 ⭐ If you like the project, consider giving it a star!
 
+</div>
