@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  --foreground-muted: #525252;
+  --accent: #111111;
+  --accent-amber: #ff6a3d;
+  --accent-coral: #ff6a3d;
+  --card: #ffffff;
+  --line: #111111;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-coral: var(--accent-coral);
+  --color-card: var(--card);
+  --font-sans: var(--font-dm), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-brand: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm), ui-monospace, monospace;
+}
+
+.navbar-app {
+  background: #ffffff;
+  border-bottom: 1px solid #111111;
+}
+
+body {
+  background: #ffffff;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+.bg-black,
+.hover\:bg-black:hover {
+  color: #ffffff;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.wordmark-shadow {
+  text-shadow: 6px 6px 0 #e8e8e8;
+}
+
+.rule-with-dots {
+  position: relative;
+  height: 1px;
+  background: #111111;
+}
+
+.rule-with-dots::before,
+.rule-with-dots::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid #111111;
+  border-radius: 999px;
+  background: #ffffff;
+  transform: translateY(-50%);
+}
+
+.rule-with-dots::before {
+  left: 0;
+}
+
+.rule-with-dots::after {
+  right: 0;
+}
+
+::selection {
+  background: #111111;
+  color: #ffffff;
+}
