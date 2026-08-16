@@ -59,7 +59,12 @@ export const metadata: Metadata = {
     "vulnerability detection",
   ],
   icons: {
-    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    icon: [
+      { url: "/git.png?v=2", type: "image/png" },
+      { url: "/favicon.ico?v=2", type: "image/x-icon" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png?v=2", type: "image/png" }],
+    shortcut: "/git.png?v=2",
   },
   manifest: '/manifest.json',
   appleWebApp: {

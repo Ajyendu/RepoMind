@@ -324,7 +324,7 @@ export default function InteractiveDemo() {
                                 className="flex gap-4 items-start w-full opacity-70"
                             >
                                 <div className="w-10 h-10 shrink-0">
-                                    <Image src="/no-bg-repomind.png" alt="RepoMind" width={40} height={40} unoptimized className="w-10 h-10 object-contain" />
+                                    <Image src="/git.png?v=2" alt="RepoMind" width={40} height={40} unoptimized className="w-10 h-10 object-contain" />
                                 </div>
                                 <div className="flex-1 bg-white border border-black p-5 rounded-2xl rounded-tl-none text-gray-600 text-sm">
                                     <p>Ask a question above — the demo will run automatically when you scroll here.</p>
@@ -342,7 +342,7 @@ export default function InteractiveDemo() {
                                 className="flex gap-4 items-start w-full"
                             >
                                 <div className="w-10 h-10 shrink-0">
-                                    <Image src="/no-bg-repomind.png" alt="RepoMind" width={40} height={40} unoptimized className="w-10 h-10 object-contain" />
+                                    <Image src="/git.png?v=2" alt="RepoMind" width={40} height={40} unoptimized className="w-10 h-10 object-contain" />
                                 </div>
 
                                 <div className="flex-1 space-y-4">

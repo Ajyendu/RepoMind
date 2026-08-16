@@ -5,7 +5,7 @@ export function BotIcon({ className }: { className?: string }) {
         // Serve the source PNG as-is so Next Image optimization cannot crop or recolor it.
         // eslint-disable-next-line @next/next/no-img-element
         <img
-            src="/no-bg-repomind.png"
+            src="/git.png?v=2"
             alt=""
             width={40}
             height={40}
