@@ -4,9 +4,12 @@ import {
     getAuthSecret,
     getGitHubOAuthConfigError,
     getGitHubOAuthCredentials,
+    sanitizeAuthUrlEnv,
 } from "./auth-env";
 import { prisma } from "./db";
 import { INVALID_SESSION_ERROR_CODE } from "./session-guard";
+
+sanitizeAuthUrlEnv();
 
 function buildGitHubProvider() {
     if (getGitHubOAuthConfigError()) {

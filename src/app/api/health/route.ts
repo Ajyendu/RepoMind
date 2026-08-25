@@ -5,6 +5,7 @@ import {
     getGitHubOAuthConfigError,
 } from "@/lib/auth-env";
 import { ensureDatabaseEnv } from "@/lib/resolve-db-env";
+import { getCanonicalSiteUrl } from "@/lib/site-url";
 
 ensureDatabaseEnv();
 
@@ -55,7 +56,8 @@ export async function GET() {
     return NextResponse.json(
         {
             status: healthy ? "ok" : "degraded",
-            appUrl: process.env.NEXT_PUBLIC_APP_URL ?? null,
+            appUrl: getCanonicalSiteUrl(),
+            githubCallbackUrl: `${getCanonicalSiteUrl()}/api/auth/callback/github`,
             checks,
         },
         { status: healthy ? 200 : 503 },

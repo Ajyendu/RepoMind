@@ -1,6 +1,49 @@
+import { toAbsoluteHttpUrl } from "./site-url";
+
+const AUTH_ORIGIN_KEYS = ["AUTH_URL", "NEXTAUTH_URL"] as const;
+
 function readEnv(name: string): string | undefined {
     const value = process.env[name]?.trim();
     return value ? value : undefined;
+}
+
+function isLocalhostOrigin(url: string): boolean {
+    try {
+        const { hostname } = new URL(url);
+        return hostname === "localhost" || hostname === "127.0.0.1";
+    } catch {
+        return false;
+    }
+}
+
+/** Auth.js reads AUTH_URL at init. Drop values that would send a bad GitHub redirect_uri. */
+export function sanitizeAuthUrlEnv(): void {
+    for (const key of AUTH_ORIGIN_KEYS) {
+        const value = readEnv(key);
+        if (!value) continue;
+
+        const resolved = toAbsoluteHttpUrl(value);
+        if (!resolved) {
+            console.warn(
+                `[auth] Unsetting invalid ${key}="${value}". Expected an http(s) origin, not an email.`,
+            );
+            delete process.env[key];
+            continue;
+        }
+
+        if (process.env.NODE_ENV === "production" && isLocalhostOrigin(resolved)) {
+            console.warn(
+                `[auth] Unsetting ${key}="${value}" in production so GitHub OAuth uses the request host.`,
+            );
+            delete process.env[key];
+            continue;
+        }
+
+        if (value !== resolved) {
+            console.warn(`[auth] Normalizing ${key} from "${value}" to "${resolved}".`);
+            process.env[key] = resolved;
+        }
+    }
 }
 
 export function getGitHubOAuthConfigError(): string | null {
