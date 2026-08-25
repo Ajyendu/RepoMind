@@ -94,7 +94,7 @@ describe("linkGithubOAuthUser", () => {
 
         await expect(
             linkGithubOAuthUser(
-                { provider: "github", providerAccountId: "22222", type: "oauth" },
+                { provider: "github", providerAccountId: "", type: "oauth" },
                 {}
             )
         ).rejects.toThrow("GitHub profile is missing login and email");
