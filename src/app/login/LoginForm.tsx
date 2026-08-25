@@ -10,12 +10,15 @@ interface LoginFormProps {
     configError: string | null;
 }
 
-const appBaseUrl = (
-    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-).replace(/\/$/, "");
-const githubCallbackUrl = `${appBaseUrl}/api/auth/callback/github`;
+import { getPublicSiteUrl } from "@/lib/site-url";
 
 export function LoginForm({ callbackUrl, configError }: LoginFormProps) {
+    const appBaseUrl = (
+        typeof window !== "undefined" && window.location.origin
+            ? window.location.origin
+            : getPublicSiteUrl()
+    ).replace(/\/$/, "");
+    const githubCallbackUrl = `${appBaseUrl}/api/auth/callback/github`;
     if (configError) {
         return (
             <LoginCard>
