@@ -4,7 +4,49 @@ import { prisma } from "./db";
 type GithubProfile = Profile & {
     login?: string;
     email?: string | null;
+    avatar_url?: string;
 };
+
+function asNonEmptyString(value: unknown): string | undefined {
+    return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function asEmail(value: unknown): string | undefined {
+    const email = asNonEmptyString(value);
+    return email?.includes("@") ? email : undefined;
+}
+
+async function resolveGithubLogin(
+    account: Account,
+    profile: GithubProfile | undefined,
+): Promise<string | undefined> {
+    const fromProfile = asNonEmptyString(profile?.login);
+    if (fromProfile) {
+        return fromProfile;
+    }
+
+    const token = asNonEmptyString(account.access_token);
+    if (!token) {
+        return undefined;
+    }
+
+    try {
+        const response = await fetch("https://api.github.com/user", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/vnd.github+json",
+                "User-Agent": "RepoMind",
+            },
+        });
+        if (!response.ok) {
+            return undefined;
+        }
+        const payload = (await response.json()) as { login?: unknown };
+        return asNonEmptyString(payload.login);
+    } catch {
+        return undefined;
+    }
+}
 
 export async function linkGithubOAuthUser(
     account: Account,
@@ -12,13 +54,11 @@ export async function linkGithubOAuthUser(
 ) {
     const providerAccountId = account.providerAccountId;
     const githubLogin =
-        typeof profile?.login === "string" ? profile.login : undefined;
+        (await resolveGithubLogin(account, profile)) ??
+        (providerAccountId ? `gh_${providerAccountId}` : undefined);
     const email =
-        typeof profile?.email === "string"
-            ? profile.email
-            : typeof account.email === "string"
-              ? account.email
-              : undefined;
+        asEmail(profile?.email) ??
+        asEmail((account as Account & { email?: string }).email);
 
     const existingAccount = await prisma.account.findUnique({
         where: {
@@ -128,9 +168,8 @@ export async function linkGithubOAuthUser(
                         ? profile.name
                         : githubLogin,
                 image:
-                    typeof profile?.image === "string"
-                        ? profile.image
-                        : undefined,
+                    asNonEmptyString(profile?.image) ??
+                    asNonEmptyString(profile?.avatar_url),
                 githubLogin,
                 accounts: {
                     create: {

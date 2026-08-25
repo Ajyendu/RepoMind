@@ -6,7 +6,6 @@ import {
     getGitHubOAuthCredentials,
     sanitizeAuthUrlEnv,
 } from "./auth-env";
-import { prisma } from "./db";
 import { INVALID_SESSION_ERROR_CODE } from "./session-guard";
 
 sanitizeAuthUrlEnv();
@@ -34,6 +33,11 @@ const authConfig: NextAuthConfig = {
     secret: getAuthSecret(),
     trustHost: true,
     providers: githubProvider ? [githubProvider] : [],
+    logger: {
+        error(error) {
+            console.error("[auth]", error);
+        },
+    },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
@@ -45,31 +49,6 @@ const authConfig: NextAuthConfig = {
             return true;
         },
         async jwt({ token, profile, account }) {
-            if (account?.provider === "github" && account.providerAccountId) {
-                try {
-                    const linked = await prisma.account.findUnique({
-                        where: {
-                            provider_providerAccountId: {
-                                provider: "github",
-                                providerAccountId: account.providerAccountId,
-                            },
-                        },
-                        include: { user: true },
-                    });
-                    if (linked?.user) {
-                        token.id = linked.user.id;
-                        if (linked.user.githubLogin) {
-                            token.username = linked.user.githubLogin;
-                        }
-                    }
-                } catch (error: unknown) {
-                    const message =
-                        error instanceof Error ? error.message : String(error);
-                    console.error("[auth] jwt account lookup failed:", message);
-                }
-            }
-
-            // Do not use OAuth `user.id` — for GitHub it is a numeric provider id, not our Prisma cuid.
             if (!token.id && typeof token.sub === "string") {
                 token.id = token.sub;
             }

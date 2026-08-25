@@ -55,7 +55,7 @@ export const proxy = auth((req) => {
 // Configure which routes use this middleware
 export const config = {
     matcher: [
-        "/api/:path*",
+        "/api/((?!auth).*)",
         "/dashboard/:path*",
         "/admin/:path*",
     ],

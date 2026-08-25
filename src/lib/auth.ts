@@ -2,6 +2,8 @@ import NextAuth from "next-auth";
 import { linkGithubOAuthUser } from "./auth-oauth-db";
 import { queueWelcomeEmailDelivery } from "./emails/delivery-service";
 import authConfig from "./auth.config";
+import { prisma } from "./db";
+import { INVALID_SESSION_ERROR_CODE } from "./session-guard";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     ...authConfig,
@@ -33,10 +35,57 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             } catch (error: unknown) {
                 const message =
                     error instanceof Error ? error.message : String(error);
-                console.error("[auth] GitHub sign-in database error (non-fatal):", message);
+                console.error("[auth] GitHub sign-in database error:", message);
+                return "/auth/error?error=Configuration";
             }
 
             return true;
+        },
+        async jwt({ token, profile, account }) {
+            if (account?.provider === "github" && account.providerAccountId) {
+                try {
+                    const linked = await prisma.account.findUnique({
+                        where: {
+                            provider_providerAccountId: {
+                                provider: "github",
+                                providerAccountId: account.providerAccountId,
+                            },
+                        },
+                        include: { user: true },
+                    });
+                    if (linked?.user) {
+                        token.id = linked.user.id;
+                        if (linked.user.githubLogin) {
+                            token.username = linked.user.githubLogin;
+                        }
+                    }
+                } catch (error: unknown) {
+                    const message =
+                        error instanceof Error ? error.message : String(error);
+                    console.error("[auth] jwt account lookup failed:", message);
+                }
+            }
+
+            const next = authConfig.callbacks?.jwt;
+            if (typeof next === "function") {
+                return next({
+                    token,
+                    profile,
+                    account,
+                    user: undefined,
+                    trigger: "update",
+                    session: null,
+                    isNewUser: false,
+                } as never);
+            }
+
+            if (!token.id && typeof token.sub === "string") {
+                token.id = token.sub;
+            }
+            if (!token.id) {
+                token.error = INVALID_SESSION_ERROR_CODE;
+            }
+            return token;
         },
     },
 });
