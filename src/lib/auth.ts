@@ -36,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 const message =
                     error instanceof Error ? error.message : String(error);
                 console.error("[auth] GitHub sign-in database error:", message);
-                return "/auth/error?error=Configuration";
+                return `/auth/error?error=Configuration&details=${encodeURIComponent(message)}`;
             }
 
             return true;
@@ -44,11 +44,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         async jwt({ token, profile, account }) {
             if (account?.provider === "github" && account.providerAccountId) {
                 try {
+                    const providerAccountId = String(account.providerAccountId);
                     const linked = await prisma.account.findUnique({
                         where: {
                             provider_providerAccountId: {
                                 provider: "github",
-                                providerAccountId: account.providerAccountId,
+                                providerAccountId,
                             },
                         },
                         include: { user: true },

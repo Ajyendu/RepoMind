@@ -52,7 +52,13 @@ export async function linkGithubOAuthUser(
     account: Account,
     profile: GithubProfile | undefined,
 ) {
-    const providerAccountId = account.providerAccountId;
+    const rawAccountId =
+        account.providerAccountId ??
+        (profile as { id?: string | number } | undefined)?.id;
+    const providerAccountId =
+        rawAccountId !== undefined && rawAccountId !== null
+            ? String(rawAccountId)
+            : "";
     const githubLogin =
         (await resolveGithubLogin(account, profile)) ??
         (providerAccountId ? `gh_${providerAccountId}` : undefined);

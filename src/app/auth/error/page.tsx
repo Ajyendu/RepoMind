@@ -28,13 +28,14 @@ const ERROR_COPY: Record<
 };
 
 interface AuthErrorPageProps {
-    searchParams: Promise<{ error?: string }>;
+    searchParams: Promise<{ error?: string; details?: string }>;
 }
 
 export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
     const params = await searchParams;
     const errorKey = params.error ?? "Default";
     const copy = ERROR_COPY[errorKey] ?? ERROR_COPY.Default;
+    const details = params.details;
 
     return (
         <main className="min-h-screen bg-white text-black">
@@ -47,6 +48,11 @@ export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps
                 <p className="text-gray-700 text-sm mb-4 leading-relaxed">
                     {copy.description}
                 </p>
+                {details ? (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 text-xs text-red-800 font-mono break-all leading-snug">
+                        <strong>Error details:</strong> {details}
+                    </div>
+                ) : null}
                 {copy.hint ? (
                     <p className="text-gray-600 text-sm mb-6 leading-relaxed border-2 border-black p-3">
                         {copy.hint}
