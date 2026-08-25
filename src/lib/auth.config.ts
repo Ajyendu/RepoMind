@@ -33,7 +33,6 @@ const githubProvider = buildGitHubProvider();
 const authConfig: NextAuthConfig = {
     secret: getAuthSecret(),
     trustHost: true,
-    useSecureCookies: process.env.NODE_ENV === "production",
     providers: githubProvider ? [githubProvider] : [],
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
