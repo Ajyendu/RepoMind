@@ -35,7 +35,7 @@
             "name": "Analyze Repository",
             "short_name": "Analyze",
             "description": "Start analyzing a GitHub repository",
-            "url": "/",
+            "url": "/"
         }
     ],
     "categories": [
