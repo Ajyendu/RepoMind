@@ -58,6 +58,7 @@ vi.mock("@/lib/github", () => ({
 vi.mock("@/lib/cache", () => ({
     getCachedSecurityScanResult: getCachedSecurityScanResultMock,
     cacheSecurityScanResult: cacheSecurityScanResultMock,
+    isKvConfigured: vi.fn(() => true),
 }));
 
 vi.mock("@/lib/services/security-service", () => ({

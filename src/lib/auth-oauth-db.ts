@@ -67,20 +67,40 @@ export async function linkGithubOAuthUser(
             : null);
 
     if (existingUser) {
-        await prisma.account.create({
-            data: {
-                userId: existingUser.id,
-                type: account.type,
-                provider: "github",
-                providerAccountId,
-                access_token: account.access_token ?? undefined,
-                refresh_token: account.refresh_token ?? undefined,
-                expires_at: account.expires_at ?? undefined,
-                token_type: account.token_type ?? undefined,
-                scope: account.scope ?? undefined,
-                id_token: account.id_token ?? undefined,
-            },
-        });
+        try {
+            await prisma.account.create({
+                data: {
+                    userId: existingUser.id,
+                    type: account.type,
+                    provider: "github",
+                    providerAccountId,
+                    access_token: account.access_token ?? undefined,
+                    refresh_token: account.refresh_token ?? undefined,
+                    expires_at: account.expires_at ?? undefined,
+                    token_type: account.token_type ?? undefined,
+                    scope: account.scope ?? undefined,
+                    id_token: account.id_token ?? undefined,
+                },
+            });
+        } catch {
+            await prisma.account.update({
+                where: {
+                    provider_providerAccountId: {
+                        provider: "github",
+                        providerAccountId,
+                    },
+                },
+                data: {
+                    userId: existingUser.id,
+                    access_token: account.access_token ?? undefined,
+                    refresh_token: account.refresh_token ?? undefined,
+                    expires_at: account.expires_at ?? undefined,
+                    token_type: account.token_type ?? undefined,
+                    scope: account.scope ?? undefined,
+                    id_token: account.id_token ?? undefined,
+                },
+            }).catch(() => null);
+        }
 
         if (githubLogin && existingUser.githubLogin !== githubLogin) {
             return prisma.user.update({
@@ -135,8 +155,12 @@ export async function linkGithubOAuthUser(
             const byLogin = githubLogin
                 ? await prisma.user.findUnique({ where: { githubLogin } })
                 : null;
-            if (byLogin) {
-                return byLogin;
+            const byEmail = email
+                ? await prisma.user.findUnique({ where: { email } })
+                : null;
+            const foundUser = byLogin ?? byEmail;
+            if (foundUser) {
+                return foundUser;
             }
         }
         throw error;

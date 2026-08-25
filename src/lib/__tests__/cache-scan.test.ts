@@ -19,6 +19,8 @@ describe("security scan cache helpers", () => {
     beforeEach(() => {
         setexMock.mockReset();
         getMock.mockReset();
+        process.env.KV_REST_API_URL = "https://mock-kv.upstash.io";
+        process.env.KV_REST_API_TOKEN = "mock-token";
     });
 
     it("stores scan results with 7-day TTL and revision-aware key", async () => {
